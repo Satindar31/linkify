@@ -10,6 +10,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "Linkify",
   description: "Shorten Links Quickly",
+  viewport: "width=device-width, initial-scale=1",
   openGraph: {
     type: "website",
     locale: "en_IN",
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
     description: "Shorten Links Quickly",
     images: [
       {
-        url: "https://linkify-shortner.vercel.app/og.png",
+        url: "https://linkify-shortner.vercel.app/api/og",
         width: 1200,
         height: 630,
         alt: "Linkify",
@@ -29,6 +30,15 @@ export const metadata: Metadata = {
     creator: "@satindar31",
     card: "summary_large_image",
     site: "https://linkify-shortner.vercel.app",
+    images: [
+      {
+        url: "https://linkify-shortner.vercel.app/api/og",
+        width: 1200,
+        height: 630,
+        alt: "Linkify",
+      },
+    ],
+    description: "Shorten Links Quickly - Linkify",
   },
 };
 

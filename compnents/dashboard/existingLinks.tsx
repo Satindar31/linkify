@@ -32,7 +32,8 @@ export default async function ExistingLinks() {
   const data: any = await response.json();
   const links: Ilink[] = data.totalLinks;
   return (
-    <>
+    <div className="flex flex-col">
+      <h1 className="text-3xl font-semibold">Your links -</h1>
       <Suspense fallback={<div>Loading...</div>}>
         {links &&
           links.map &&
@@ -53,6 +54,6 @@ export default async function ExistingLinks() {
             </React.Fragment>
           ))}
       </Suspense>
-    </>
+    </div>
   );
 }

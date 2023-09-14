@@ -1,11 +1,11 @@
 import { currentUser } from "@clerk/nextjs";
-import { SignUp } from "@clerk/nextjs/app-beta";
-import { redirectToSignUp } from "@clerk/nextjs/server";
 import { Button } from "@nextui-org/button";
-import Link from "next/link";
+import { Link } from "@nextui-org/link";
+import CreditsModal from '@/compnents/home/creditsModal'
 
 export default async function Home() {
   const user = await currentUser();
+
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-40">
@@ -25,6 +25,7 @@ export default async function Home() {
         )}
         <Button size="lg" variant="bordered">Learn More</Button>
       </div>
+      <CreditsModal />
     </main>
   );
 }

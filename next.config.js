@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    poweredByHeader: 'Hopes and Prayers',
+    poweredByHeader: false,
 }
 
 module.exports = nextConfig

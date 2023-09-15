@@ -1,11 +1,10 @@
 import { currentUser } from "@clerk/nextjs";
 import { Button } from "@nextui-org/button";
 import { Link } from "@nextui-org/link";
-import CreditsModal from '@/compnents/home/creditsModal'
+import CreditsModal from '@/components/home/creditsModal'
 
 export default async function Home() {
   const user = await currentUser();
-
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-40">

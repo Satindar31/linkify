@@ -1,8 +1,8 @@
 import { SignIn, UserButton, currentUser } from "@clerk/nextjs";
 import { Suspense } from "react";
 import LinkLoading from "./loading";
-import NoLinks from "@/compnents/dashboard/noLinks";
-import ExistingLinks from "@/compnents/dashboard/existingLinks";
+import NoLinks from "@/components/dashboard/noLinks";
+import ExistingLinks from "@/components/dashboard/existingLinks";
 
 export default async function Dashboard() {
   const user = await currentUser();
@@ -13,9 +13,11 @@ export default async function Dashboard() {
   const data = await response.json();
 
   return (
-    <div className="h-screen overflow-hidden overflow-x-hidden overflow-y-hidden">
+    <div className="h-screen overflow-x-hidden overflow-y-auto">
       <Suspense fallback={<LinkLoading />}>
+        <div className='mt-5 ml-2'>
         <UserButton afterSignOutUrl="/" />
+        </div>
         {data == 0 ? <NoLinks /> : <ExistingLinks />}
       </Suspense>
     </div>

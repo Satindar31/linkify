@@ -7,6 +7,7 @@ export function GET() {
         message: "A user tried to access a page that does not exist.",
         cause: "User tried to access a page that does not exist."
     })
+    logtail.flush()
     return new Response(JSON.stringify({ error: "Error Reported" }), {
         status: 200,
     });

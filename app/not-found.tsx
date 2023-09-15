@@ -4,7 +4,7 @@ import { Button } from "@nextui-org/button";
 import Link from "next/link";
 
 export default function NotFound() {
-    fetch(process.env.URL + "/api/noutfound")
+    fetch(process.env.URL + "/api/notfound")
     return (
         <div className="flex flex-col justify-center items-center h-screen">
             <h1 className="text-7xl font-bold m-2">Hmm, thats odd</h1>

@@ -1,6 +1,7 @@
 import { Card, CardBody } from "@nextui-org/card";
 import Image from "next/image";
 import React, { Suspense } from "react";
+import CreateLinkModal from "./createLinkModal";
 
 /**
  * @interface Ilink
@@ -33,7 +34,10 @@ export default async function ExistingLinks() {
   const links: Ilink[] = data.totalLinks;
   return (
     <div className="flex flex-col">
-      <h1 className="text-3xl font-semibold">Your links -</h1>
+      <div className="flex flex-row">
+        <h1 className="text-3xl font-semibold">Your links -</h1>
+        <CreateLinkModal />
+      </div>
       <Suspense fallback={<div>Loading...</div>}>
         {links &&
           links.map &&

@@ -8,6 +8,7 @@ const logtail = new Logtail(process.env.LOGTAIL_SOURCE_TOKEN ?? "");
 export async function GET() {
     console.log("totalLinks")
     const user = await currentUser()
+    console.log(user?.emailAddresses[0])
     try {
 
         const totalLinks = await prisma.link.findMany({
@@ -15,7 +16,7 @@ export async function GET() {
                 email: user?.emailAddresses[0].emailAddress.toString() ?? user?.primaryEmailAddressId?.toString(),
             }
         })
-        // console.log(totalLinks)
+        
         return new Response(JSON.stringify({ totalLinks }), { status: 200 })
     }
     catch(err: any) {

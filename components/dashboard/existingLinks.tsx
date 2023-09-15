@@ -35,7 +35,7 @@ export default async function ExistingLinks() {
   return (
     <div className="flex flex-col">
       <div className="flex flex-row">
-        <h1 className="text-3xl font-semibold">Your links -</h1>
+        <h1 className="text-3xl font-semibold mt-12">Your links -</h1>
         <CreateLinkModal />
       </div>
       <Suspense fallback={<div>Loading...</div>}>
@@ -51,7 +51,7 @@ export default async function ExistingLinks() {
                     height={100}
                     width={200}
                     alt=""
-                    src={"/public/vercel.svg"}
+                    src={"/vercel.svg"}
                   />
                 </CardBody>
               </Card>

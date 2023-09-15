@@ -11,21 +11,21 @@ import {
 } from "@nextui-org/modal";
 import { Input } from "@nextui-org/input";
 import { useState } from "react";
-import toast, { Toaster } from 'react-hot-toast';
-
+import toast, { Toaster } from "react-hot-toast";
 
 export default function CreateLinkModal() {
-
-    const successToast = () => toast.success('Your link has been created!', {
-        icon: '👏',
-        position: 'bottom-right'
+  const successToast = () =>
+    toast.success("Your link has been created!", {
+      icon: "👏",
+      position: "bottom-right",
     });
-    const failToast = () => toast.error('Something went wrong!', {
-        icon: '😢',
-        position: 'bottom-right'
+  const failToast = () =>
+    toast.error("Something went wrong!", {
+      icon: "😢",
+      position: "bottom-right",
     });
 
-    let response: Response;
+  let response: Response;
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
   const [name, setName] = useState("");
@@ -33,15 +33,17 @@ export default function CreateLinkModal() {
   const [URL, setURL] = useState("");
 
   async function createLink() {
-        response = await fetch("/api/createLink", {
+    const response = await fetch("/api/createLink", {
       method: "POST",
       body: JSON.stringify({ name, description, URL }),
     });
+
+    successToast();
   }
 
   return (
     <>
-      <Button onPress={onOpen}>Create Link</Button>
+      <Button onPress={onOpen} className="mt-12 ml-5">Create Link</Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
@@ -77,15 +79,9 @@ export default function CreateLinkModal() {
                 </Button>
                 <Button
                   color="primary"
-                  onPress={async () => {
-                    if(response.ok) {
-                        successToast
-                        onClose
-                    }
-                    else {
-                        failToast
-                        onClose
-                    }
+                  onPress={() => {
+                    createLink();
+                    onClose();
                   }}
                 >
                   Create
@@ -95,6 +91,8 @@ export default function CreateLinkModal() {
           )}
         </ModalContent>
       </Modal>
+
+      <Toaster />
     </>
   );
 }

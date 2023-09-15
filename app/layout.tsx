@@ -52,7 +52,7 @@ export default function RootLayout({
       baseTheme: dark,
     }}>
       <html lang="en_IN" className={`dark text-foreground bg-background ${inter.className}`}>
-        <body>
+        <body className="pl-5">
           <Providers>{children}</Providers>
         </body>
       </html>

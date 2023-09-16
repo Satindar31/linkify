@@ -1,6 +1,9 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-    poweredByHeader: false,
-}
+const { withLogtail } = require('@logtail/next');
 
-module.exports = nextConfig
+module.exports = withLogtail({
+  poweredByHeader: false,
+});
+
+module.exports = {
+  LOGTAIL_SOURCE_TOKEN: process.env.LOGTAIL_SOURCE_TOKEN,
+}

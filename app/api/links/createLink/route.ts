@@ -4,8 +4,7 @@ const prisma = new PrismaClient();
 import crypto from "crypto";
 import { currentUser } from "@clerk/nextjs";
 
-import { Logtail } from "@logtail/node";
-const logtail = new Logtail(process.env.LOGTAIL_SOURCE_TOKEN ?? "");
+import { log } from '@logtail/next';
 
 export async function POST(req: NextRequest) {
   console.log("/createLink");
@@ -17,13 +16,7 @@ export async function POST(req: NextRequest) {
   }: { URL: string; name: string; description: string | undefined } =
     await req.json();
   if (!URL || !name) {
-    logtail.error({
-      name: "Missing value while creating link",
-      message:
-        "Either the URL or Name where not recieved in the request body while trying to create a link for email: " +
-        (user?.primaryEmailAddressId ?? user?.emailAddresses[0].emailAddress),
-        cause: "Missing values"
-    });
+    log.error("No URL/NAME provided");
     return new Response(JSON.stringify({ error: "No URL/NAME provided" }), {
       status: 400,
     });
@@ -46,20 +39,13 @@ export async function POST(req: NextRequest) {
     });
     return new Response(JSON.stringify(newLink), { status: 201 });
   } catch (err: any) {
-    logtail.error({
-      message: err.message,
-      name: "Unknown error while creating link.",
-      cause: {
-        error: err,
-        checklist: "Is the database running. Check vercel console. Check for missing enviorment variables. Check BetterUptime"
-      },
-    })
+    log.error(err.message, { error: err })
     console.log(err);
     return new Response(JSON.stringify({ error: err.message }), {
       status: 500,
     });
   } finally {
-    logtail.flush()
+    log.flush()
     prisma.$disconnect();
   }
 }

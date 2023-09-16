@@ -2,8 +2,9 @@ import { currentUser } from "@clerk/nextjs";
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-import { Logtail } from "@logtail/node";
-const logtail = new Logtail(process.env.LOGTAIL_SOURCE_TOKEN ?? "");
+
+
+import { log } from '@logtail/next';
 
 export async function GET() {
   const user = await currentUser();
@@ -17,20 +18,13 @@ export async function GET() {
 
     return new Response(JSON.stringify({ links }), { status: 200 });
   } catch (err: any) {
-    logtail.error({
-      message: err.message,
-      name: "Unknown error while creating link.",
-      cause: {
-        error: err,
-        checklist: "Is the database running. Check vercel console. Check for missing enviorment variables. Check BetterUptime"
-      },
-    })
+    const e = log.error(err.message, { error: err });
     console.log(err);
     return new Response(JSON.stringify({ error: err.message }), {
       status: 500,
     });
   } finally {
-    logtail.flush()
+    log.flush()
     await prisma.$disconnect();
   }
 }

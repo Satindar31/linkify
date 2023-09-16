@@ -3,8 +3,7 @@ import { PrismaClient } from "@prisma/client";
 import { NextRequest } from "next/server";
 const prisma = new PrismaClient()
 
-import { Logtail } from "@logtail/node";
-const logtail = new Logtail(process.env.LOGTAIL_SOURCE_TOKEN ?? "");
+import { log } from '@logtail/next';
 
 export async function DELETE(req: NextRequest) {
     const user = await currentUser()
@@ -20,22 +19,15 @@ export async function DELETE(req: NextRequest) {
             }
         })
 
-        logtail.info({
-            name: "Link deleted",
-            message: "Link with ending " + ending + " was deleted",
-        })
+        log.info("Deleted link", { ending })
         return new Response("deleted", { status: 200 })
     }
     catch(err: any){
-        logtail.error({
-            message: err,
-            name: err.message,
-            cause: "Check if the link exists"
-        })
+        log.error(err.message, { error: err })
         return new Response("Internal Server Error", { status: 500 })
     }
     finally {
-        await logtail.flush()
+        log.flush()
         return new Response("OK", { status: 200 })
     }
 }

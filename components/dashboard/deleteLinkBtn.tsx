@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from "@nextui-org/button";
 import toast from "react-hot-toast";
 
@@ -27,7 +29,7 @@ export default function DeleteLinkButton({
   }
 
   return (
-    <Button onPress={deleteLink} variant="solid" color="danger">
+    <Button className="max-w-sm" onClick={deleteLink} variant="solid" color="danger">
       Delete Link
     </Button>
   );

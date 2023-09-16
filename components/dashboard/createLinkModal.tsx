@@ -33,12 +33,13 @@ export default function CreateLinkModal() {
   const [URL, setURL] = useState("");
 
   async function createLink() {
-    const response = await fetch("/api/createLink", {
+    const response = await fetch("/api/links/createLink", {
       method: "POST",
       body: JSON.stringify({ name, description, URL }),
     });
 
-    successToast();
+    if(response.ok) successToast()
+    else failToast()
   }
 
   return (

@@ -7,7 +7,7 @@ import ExistingLinks from "@/components/dashboard/existingLinks";
 export default async function Dashboard() {
   const user = await currentUser();
   if (!user) return <SignIn redirectUrl={"/dashboard"} />;
-  const response = await fetch(process.env.URL + "/api/getLinks", {
+  const response = await fetch(process.env.URL + "/api/links/getLinks", {
     method: "GET",
   });
   const data = await response.json();

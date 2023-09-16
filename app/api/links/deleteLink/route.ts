@@ -9,17 +9,22 @@ const logtail = new Logtail(process.env.LOGTAIL_SOURCE_TOKEN ?? "");
 export async function DELETE(req: NextRequest) {
     const user = await currentUser()
     if(!user) return new Response("Unauthorized", { status: 401 })
-    const { id }: {id: number} = await req.json()
+    const { ending }: {ending: string} = await req.json()
 
-    if(!id) return new Response("Missing id", { status: 400 })
+    if(!ending) return new Response("Missing ending", { status: 400 })
 
     try {
         await prisma.link.delete({
             where: {
-                email: user.primaryEmailAddressId ?? user.emailAddresses[0].emailAddress,
-                id: id
+                assignedEnding: ending
             }
         })
+
+        logtail.info({
+            name: "Link deleted",
+            message: "Link with ending " + ending + " was deleted",
+        })
+        return new Response("deleted", { status: 200 })
     }
     catch(err: any){
         logtail.error({

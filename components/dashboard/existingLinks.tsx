@@ -2,6 +2,9 @@ import { Card, CardBody } from "@nextui-org/card";
 import Image from "next/image";
 import React, { Suspense } from "react";
 import CreateLinkModal from "./createLinkModal";
+import { Button } from "@nextui-org/button";
+import DeleteLinkButton from "./deleteLinkBtn";
+import LinkLoading from "@/app/dashboard/loading";
 
 /**
  * @interface Ilink
@@ -29,7 +32,7 @@ interface Ilink {
 }
 
 export default async function ExistingLinks() {
-  const response = await fetch(process.env.URL + "/api/totalLinks");
+  const response = await fetch(process.env.URL + "/api/links/totalLinks");
   const data: any = await response.json();
   const links: Ilink[] = data.totalLinks;
   return (
@@ -38,13 +41,13 @@ export default async function ExistingLinks() {
         <h1 className="text-3xl font-semibold mt-12">Your links -</h1>
         <CreateLinkModal />
       </div>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<LinkLoading />}>
         {links &&
           links.map &&
           links.map((link) => (
             <React.Fragment key={link.id}>
               <Card className="m-4">
-                <CardBody className="grid grid-cols-3">
+                <CardBody className="grid grid-cols-4">
                   <p className="font-semibold">{link.name}</p>
                   <p>{link.totalClicks}</p>
                   <Image
@@ -53,6 +56,7 @@ export default async function ExistingLinks() {
                     alt=""
                     src={"/vercel.svg"}
                   />
+                  <DeleteLinkButton linkEnding={link.assignedEnding} />
                 </CardBody>
               </Card>
             </React.Fragment>
